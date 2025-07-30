@@ -1,1 +1,27 @@
 #Shopify WorkFlow
+name: Add Product to Shopify
+
+on:
+  workflow_dispatch:  #  Manual trigger via GitHub UI
+
+jobs:
+  add-product:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Axios
+        run: npm install axios
+
+      - name: Run Create Product Script
+        run: node scripts/create-product.js
+        env:
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_PASSWORD }}
